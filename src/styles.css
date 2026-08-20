@@ -240,6 +240,19 @@ input {
   font-weight: 600;
 }
 
+.new-message-badge {
+  flex-shrink: 0;
+  border-radius: 999px;
+  padding: 3px 7px;
+  background: #dc2626;
+  color: #ffffff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
 .user-status {
   display: inline-flex;
   align-items: center;

@@ -3,11 +3,18 @@ import type { Status } from "../../../interface/interface"
 type UserProps = {
   nickName: string
   status: Status
+  newMessage: boolean
   onClick: () => void
   isActive: boolean
 }
 
-export function User({ nickName, status, onClick, isActive }: UserProps) {
+export function User({
+  nickName,
+  status,
+  newMessage,
+  onClick,
+  isActive,
+}: UserProps) {
   const isOnline = status === "ONLINE"
 
   return (
@@ -26,6 +33,11 @@ export function User({ nickName, status, onClick, isActive }: UserProps) {
           {isOnline ? "Online" : "Offline"}
         </span>
       </span>
+      {newMessage && !isActive && (
+        <span className="new-message-badge" aria-label="New message">
+          New
+        </span>
+      )}
     </button>
   )
 }
