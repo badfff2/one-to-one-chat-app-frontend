@@ -9,13 +9,13 @@ export function useUserPresenceHandler(currentUserNickName: string) {
 
   return useCallback(
     (_payload: IMessage) => {
-      void refreshConnectedUsersList(currentUserNickName, setOtherUsersList)
+      void refreshUsersList(currentUserNickName, setOtherUsersList)
     },
     [currentUserNickName, setOtherUsersList],
   )
 }
 
-async function refreshConnectedUsersList(
+async function refreshUsersList(
   currentUserNickName: string,
   setOtherUsersList: (users: User[] | null) => void,
 ) {
