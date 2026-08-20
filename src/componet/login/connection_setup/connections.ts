@@ -1,5 +1,6 @@
 import { Client, type IMessage } from "@stomp/stompjs"
 import SockJS from "sockjs-client"
+import { apiBaseUrl } from "../../../config/api"
 
 type ConnectionCallbacks = {
   onMessageReceived: (payload: IMessage) => void
@@ -12,7 +13,7 @@ export function setUpConnection(
   fullName: string,
   callbacks: ConnectionCallbacks,
 ) {
-  const socket = new SockJS("http://localhost:8088/ws")
+  const socket = new SockJS(`${apiBaseUrl}/ws`)
 
   const stompClient = new Client({
     webSocketFactory: () => socket,

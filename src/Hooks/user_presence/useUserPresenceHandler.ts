@@ -2,6 +2,7 @@ import type { IMessage } from "@stomp/stompjs"
 import { useCallback } from "react"
 import { useChatPage } from "../../context/chatPageContext"
 import type { User } from "../../interface/interface"
+import { apiBaseUrl, apiMethod } from "../../config/api"
 
 export function useUserPresenceHandler(currentUserNickName: string) {
   const { setOtherUsersList } = useChatPage()
@@ -19,7 +20,9 @@ async function refreshConnectedUsersList(
   setOtherUsersList: (users: User[] | null) => void,
 ) {
   try {
-    const connectedUsersResponse = await fetch("http://localhost:8088/users")
+    const connectedUsersResponse = await fetch(`${apiBaseUrl}/users`, {
+      method: apiMethod,
+    })
     let connectedUsers = (await connectedUsersResponse.json()) as User[]
     connectedUsers = connectedUsers.filter(
       (user) => user.nickName !== currentUserNickName,

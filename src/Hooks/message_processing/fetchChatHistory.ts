@@ -1,4 +1,5 @@
 import type { ChatMessage } from "../../interface/interface"
+import { apiBaseUrl, apiMethod } from "../../config/api"
 
 export async function fetchChatHistory(
   currentUserNickName: string | null,
@@ -9,7 +10,8 @@ export async function fetchChatHistory(
   }
 
   const response = await fetch(
-    `http://localhost:8088/messages/${currentUserNickName}/${otherUserNickName}`,
+    `${apiBaseUrl}/messages/${currentUserNickName}/${otherUserNickName}`,
+    { method: apiMethod },
   )
 
   if (!response.ok) {
