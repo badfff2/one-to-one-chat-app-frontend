@@ -224,8 +224,44 @@ input {
   font-size: 0.9rem;
 }
 
+.user-avatar.offline {
+  background: #9ca3af;
+}
+
+.user-details {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .user-name {
   font-weight: 600;
+}
+
+.user-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.user-status.online {
+  color: #15803d;
+}
+
+.user-status.offline {
+  color: #6b7280;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: currentColor;
 }
 
 .chat-area {

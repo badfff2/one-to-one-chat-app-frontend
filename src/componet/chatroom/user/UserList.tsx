@@ -38,6 +38,7 @@ export function UserList() {
         <User
           key={user.nickName}
           nickName={user.nickName}
+          status={user.status}
           onClick={() => handleUserClick(user.nickName)}
           isActive={chatingWith === user.nickName}
         />
