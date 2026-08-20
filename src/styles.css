@@ -304,6 +304,14 @@ input {
   margin: 0;
 }
 
+.message-timestamp {
+  display: block;
+  margin-top: 6px;
+  font-size: 0.7rem;
+  line-height: 1.2;
+  opacity: 0.72;
+}
+
 .chat-message.mine {
   align-self: flex-end;
   background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
