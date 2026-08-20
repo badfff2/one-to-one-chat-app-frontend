@@ -9,7 +9,6 @@ export function LogoutButton() {
     if (!stompClient || !currentUser) {
       return
     }
-    currentUser?.nickName
 
     stompClient.publish({
       destination: "/app/user.disconnectUser",
