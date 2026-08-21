@@ -1,5 +1,5 @@
 import { useChatPage } from "../../../context/chatPageContext"
-import { fetchChatHistory } from "../../../Hooks/message_processing/fetchChatHistory"
+import { fetchChatHistory } from "../../../Hooks/message_processing/chat_fetching/fetchChatHistory"
 import { User } from "./User"
 
 export function UserList() {

@@ -1,5 +1,5 @@
-import type { ChatMessage } from "../../interface/interface"
-import { apiBaseUrl, apiMethod } from "../../config/api"
+import type { ChatMessage } from "../../../interface/interface"
+import { apiBaseUrl, apiMethod } from "../../../config/api"
 
 export async function fetchChatHistory(
   currentUserNickName: string | null,
