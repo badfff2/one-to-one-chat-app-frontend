@@ -10,7 +10,7 @@ interface ChatMessage {
 }
 
 interface User {
-  id?: string
+  publicId?: string
   nickName: string
   fullName: string
   status: Status

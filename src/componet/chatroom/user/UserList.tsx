@@ -36,7 +36,7 @@ export function UserList() {
       <div className="userlist-header">Users</div>
       {otherUsersList?.map((user) => (
         <User
-          key={user.nickName}
+          key={user.publicId ? user.publicId : crypto.randomUUID()}
           nickName={user.nickName}
           status={user.status}
           newMessage={user.newMessage}
