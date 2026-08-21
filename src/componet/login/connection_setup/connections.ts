@@ -5,6 +5,7 @@ import { apiBaseUrl } from "../../../config/api"
 type ConnectionCallbacks = {
   onMessageReceived: (payload: IMessage) => void
   onUserPresenceChanged: (payload: IMessage) => void
+  onLogin: (payload: IMessage) => void
   onError?: (error: unknown) => void
 }
 
@@ -25,6 +26,8 @@ export function setUpConnection(
       )
 
       stompClient.subscribe("/topic/public", callbacks.onUserPresenceChanged)
+
+      stompClient.subscribe(`/user/${nickName}/systemInfo`, callbacks.onLogin)
 
       stompClient.publish({
         destination: "/app/user.connectUser",

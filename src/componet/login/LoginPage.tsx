@@ -4,6 +4,7 @@ import type { Status, User } from "../../interface/interface"
 import { setUpConnection } from "./connection_setup/connections"
 import { useUserPresenceHandler } from "../../Hooks/user_presence/useUserPresenceHandler"
 import { useMessageReceivingHandler } from "../../Hooks/message_processing/message_receiving/useMessageReceivingHandler"
+import { useUserLoginHandler } from "../../Hooks/user_login/useUserLoginHandler"
 
 export function LoginPage() {
   const { setCurrentUser, isLoggedIn, setIsLoggedIn, setStompClient } =
@@ -13,6 +14,7 @@ export function LoginPage() {
 
   const handleUserPresence = useUserPresenceHandler(nickName)
   const handleMessageReceiving = useMessageReceivingHandler()
+  const handleUserLogin = useUserLoginHandler()
 
   const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
@@ -38,6 +40,9 @@ export function LoginPage() {
       },
       onUserPresenceChanged: (payload) => {
         void handleUserPresence(payload)
+      },
+      onLogin: (payload) => {
+        void handleUserLogin(payload)
       },
       onError: (error) => {
         console.error("STOMP error:", error)
