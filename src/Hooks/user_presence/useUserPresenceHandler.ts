@@ -28,7 +28,7 @@ async function refreshUsersList(
       (user) => user.nickName !== currentUserNickName,
     )
     setOtherUsersList(connectedUsers)
-    console.log("Fetch other user successfully")
+    console.log("Fetch other user successfully", connectedUsers)
   } catch (error) {
     console.error("Failed to refresh connected users:", error)
   }
