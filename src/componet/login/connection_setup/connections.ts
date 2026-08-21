@@ -24,10 +24,10 @@ export function setUpConnection(
         callbacks.onMessageReceived,
       )
 
-      stompClient.subscribe("/user/public", callbacks.onUserPresenceChanged)
+      stompClient.subscribe("/topic/public", callbacks.onUserPresenceChanged)
 
       stompClient.publish({
-        destination: "/app/user.addUser",
+        destination: "/app/user.connectUser",
         body: JSON.stringify({
           nickName,
           fullName,
