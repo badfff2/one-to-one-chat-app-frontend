@@ -25,6 +25,7 @@ export function UserList() {
         currentUser?.nickName ?? null,
         nickName,
       )
+      console.log("chat history:", userChat)
       resetMessage(userChat)
     } catch (error) {
       console.error("Failed to fetch chat history:", error)
