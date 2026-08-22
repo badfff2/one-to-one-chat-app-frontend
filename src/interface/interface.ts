@@ -1,8 +1,8 @@
 type Status = "ONLINE" | "OFFLINE"
 
 interface ChatMessage {
-  id?: string
-  chatId?: string
+  publicId?: string
+  chatRoomId?: string
   senderId: string
   recipientId: string
   content: string

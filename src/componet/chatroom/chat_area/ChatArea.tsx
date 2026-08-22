@@ -42,7 +42,7 @@ export function ChatArea({ children }: ChatAreaProps) {
 
           return (
             <div
-              key={message.id ?? crypto.randomUUID()}
+              key={message.publicId ?? crypto.randomUUID()}
               className={`chat-message ${isMine ? "mine" : "other"}`}
             >
               <p>{message.content}</p>
