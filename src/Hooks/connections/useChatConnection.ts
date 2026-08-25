@@ -9,12 +9,6 @@ export const useChatConnection = (
   handleUserPresence: (_payload: IMessage) => void,
   handleUserLogin: (payload: IMessage) => void,
 ) => {
-  // const { currentUser } = useAuthContext()
-  // const { setStompClient } = useConnectionContext()
-
-  // const handleUserPresence = useUserPresenceHandler(currentUser?.nickName)
-  // const handleUserLogin = useUserLoginHandler()
-
   useEffect(() => {
     // If no user is logged in, don't connect
     if (!currentUser) return
@@ -37,12 +31,11 @@ export const useChatConnection = (
 
     setStompClient(client)
 
-    // CLEANUP FUNCTION: Runs when user logs out or component unmounts
     return () => {
       if (client) {
         client.deactivate()
         setStompClient(null)
       }
     }
-  }, [currentUser, setStompClient]) // Re-runs only if the logged-in user changes
+  }, [currentUser, setStompClient])
 }
