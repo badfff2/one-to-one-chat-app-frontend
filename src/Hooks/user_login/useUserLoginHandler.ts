@@ -11,7 +11,7 @@ export function useUserLoginHandler() {
       const userInfo = JSON.parse(payload.body) as User
 
       if (currentUser?.publicId) {
-        console.log("No need for setting up user agagin")
+        console.log("No need for setting up user again")
         return
       }
       handleUserLogin(userInfo, setCurrentUser)
