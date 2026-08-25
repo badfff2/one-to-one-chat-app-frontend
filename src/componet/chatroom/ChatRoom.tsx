@@ -6,7 +6,7 @@ import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
 import { sendMessageService } from "../../services/sendMessageService"
-import type { ChatMessage, User } from "../../interface/interface"
+import type { ChatMessage } from "../../interface/interface"
 import { userLogout } from "../../services/logout"
 
 export function ChatRoom() {
