@@ -5,6 +5,8 @@ import { ChatArea } from "./chat_area/ChatArea"
 import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
+import { sendMessageService } from "../../services/sendMessageService"
+import type { ChatMessage } from "../../interface/interface"
 
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
@@ -17,16 +19,13 @@ export function ChatRoom() {
     }
 
     const msg = {
-      senderId: currentUser.nickName,
+      senderId: currentUser.publicId,
       recipientId: chatingWith,
       content: content,
       timestamp: new Date(),
-    }
+    } as ChatMessage
 
-    stompClient.publish({
-      destination: "/app/chat",
-      body: JSON.stringify(msg),
-    })
+    sendMessageService(msg, stompClient)
 
     addMessage(msg)
   }
