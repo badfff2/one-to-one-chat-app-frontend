@@ -1,40 +1,19 @@
 import { useState } from "react"
-import { useAuthContext } from "../../../context/AuthenticationContext"
-import { useMessageContext } from "../../../context/MessageContext"
-import { useConnectionContext } from "../../../context/ConnectionContext"
 
-export function UserChatInput() {
-  const { chatingWith } = useMessageContext()
-  const { currentUser } = useAuthContext()
-  const { stompClient } = useConnectionContext()
-  const { addMessage } = useMessageContext()
+type UserChatInputProps = {
+  onSendMessage: (message: string) => void | Promise<void>
+}
 
+export function UserChatInput({ onSendMessage }: UserChatInputProps) {
   const [message, setMessage] = useState("")
 
-  if (!chatingWith) {
-    return null
-  }
-
-  const sendMessage = async () => {
+  const handleSend = async () => {
     const trimmed = message.trim()
-    if (!stompClient || !chatingWith || !trimmed || !currentUser) {
+    if (!trimmed) {
       return
     }
 
-    const msg = {
-      senderId: currentUser.nickName,
-      recipientId: chatingWith,
-      content: trimmed,
-      timestamp: new Date(),
-    }
-
-    stompClient.publish({
-      destination: "/app/chat",
-      body: JSON.stringify(msg),
-    })
-
-    addMessage(msg)
-
+    await onSendMessage(trimmed)
     setMessage("")
   }
 
@@ -42,7 +21,7 @@ export function UserChatInput() {
     event: React.MouseEvent<HTMLButtonElement>,
   ) => {
     event.preventDefault()
-    await sendMessage()
+    await handleSend()
   }
 
   const handleKeyDown = async (
@@ -50,7 +29,7 @@ export function UserChatInput() {
   ) => {
     if (event.key === "Enter") {
       event.preventDefault()
-      await sendMessage()
+      await handleSend()
     }
   }
 
