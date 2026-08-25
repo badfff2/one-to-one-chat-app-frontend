@@ -1,10 +1,10 @@
 import type { ReactNode } from "react"
+import { useMessageContext } from "../../../context/MessageContext"
+import { useAuthContext } from "../../../context/AuthenticationContext"
 import {
   formatMessageTimestamp,
   getMessageDateTime,
-} from "../../../utilities/TimeStamp"
-import { useMessageContext } from "../../../context/MessageContext"
-import { useAuthContext } from "../../../context/AuthenticationContext"
+} from "../../../utilities/timeStamp"
 
 type ChatAreaProps = {
   children: ReactNode
