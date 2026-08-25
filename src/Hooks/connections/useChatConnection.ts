@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { setUpConnection } from "../../services/connections_new"
+import { setUpConnection } from "../../services/connections"
 import type { Client, IMessage } from "@stomp/stompjs"
 import type { User } from "../../interface/interface"
 
