@@ -1,34 +1,13 @@
 import type { ReactNode } from "react"
 import { useChatPage } from "../../../context/chatPageContext"
 import type { ChatMessage } from "../../../interface/interface"
+import {
+  formatMessageTimestamp,
+  getMessageDateTime,
+} from "../../../utilities/TimeStamp"
 
 type ChatAreaProps = {
   children: ReactNode
-}
-
-function formatMessageTimestamp(timestamp: ChatMessage["timestamp"]) {
-  if (!timestamp) {
-    return ""
-  }
-
-  const date = new Date(timestamp)
-  if (Number.isNaN(date.getTime())) {
-    return ""
-  }
-
-  return new Intl.DateTimeFormat(undefined, {
-    dateStyle: "medium",
-    timeStyle: "short",
-  }).format(date)
-}
-
-function getMessageDateTime(timestamp: ChatMessage["timestamp"]) {
-  if (!timestamp) {
-    return undefined
-  }
-
-  const date = new Date(timestamp)
-  return Number.isNaN(date.getTime()) ? undefined : date.toISOString()
 }
 
 export function ChatArea({ children }: ChatAreaProps) {
