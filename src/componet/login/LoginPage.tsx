@@ -24,8 +24,7 @@ export function LoginPage() {
   return (
     <div
       className="login-page"
-      // style={{ display: isLoggedIn ? "none" : "flex" }}
-      style={{ display: "flex" }}
+      style={{ display: isLoggedIn ? "none" : "flex" }}
     >
       <div className="login-card">
         <h2 className="login-title">Welcome back</h2>
