@@ -6,7 +6,7 @@ import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
 import { sendMessageService } from "../../services/sendMessageService"
-import type { ChatMessage } from "../../interface/interface"
+import type { ChatMessage, Status, User } from "../../interface/interface"
 
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
@@ -30,6 +30,25 @@ export function ChatRoom() {
     addMessage(msg)
   }
 
+  const handleLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+
+    if (!stompClient || !currentUser) {
+      return
+    }
+
+    stompClient.publish({
+      destination: "/app/user.disconnectUser",
+      body: JSON.stringify({
+        nickName: currentUser.nickName,
+        fullName: currentUser.fullName,
+        status: "OFFLINE" as Status,
+      } as User),
+    })
+
+    window.location.reload()
+  }
+
   return (
     <div
       className="chatroom-layout"
@@ -42,7 +61,7 @@ export function ChatRoom() {
       <main className="chatroom-main">
         <div className="chatroom-header">
           <h2 className="chatroom-title">Chat Room</h2>
-          <LogoutButton />
+          <LogoutButton onLogout={handleLogout} />
         </div>
 
         <ChatArea>

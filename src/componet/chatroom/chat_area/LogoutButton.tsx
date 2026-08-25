@@ -1,30 +1,11 @@
-import { useChatPage } from "../../../context/chatPageContext"
-import type { Status, User } from "../../../interface/interface"
-export function LogoutButton() {
-  const { stompClient, currentUser } = useChatPage()
+type LogoutButtonProps = {
+  onLogout: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
 
-  const handleLogout = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-
-    if (!stompClient || !currentUser) {
-      return
-    }
-
-    stompClient.publish({
-      destination: "/app/user.disconnectUser",
-      body: JSON.stringify({
-        nickName: currentUser.nickName,
-        fullName: currentUser.fullName,
-        status: "OFFLINE" as Status,
-      } as User),
-    })
-
-    window.location.reload()
-  }
-
+export function LogoutButton({ onLogout }: LogoutButtonProps) {
   return (
     <div className="log-out-button">
-      <button type="button" className="logout-button" onClick={handleLogout}>
+      <button type="button" className="logout-button" onClick={onLogout}>
         Logout
       </button>
     </div>
