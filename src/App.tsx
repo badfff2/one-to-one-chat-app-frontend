@@ -1,7 +1,7 @@
 import { useChatConnection } from "./Hooks/connections/useChatConnection"
 import { useUserLoginHandler } from "./Hooks/user_login/useUserLoginHandler"
 import { useUserPresenceHandler } from "./Hooks/user_presence/useUserPresenceHandler"
-import { LoginPageNew } from "./componet/login/LoginPage"
+import { LoginPage } from "./componet/login/LoginPage"
 import { useAuthContext } from "./context/AuthenticationContext"
 import { useConnectionContext } from "./context/ConnectionContext"
 import { LoginProviders } from "./context/LoginProvider"
@@ -18,7 +18,7 @@ function ChatAppContent(): React.JSX.Element {
     handleUserPresence,
     handleUserLogin,
   )
-  return <LoginPageNew />
+  return <LoginPage />
 }
 
 function App() {

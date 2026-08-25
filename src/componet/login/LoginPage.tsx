@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useAuthContext } from "../../context/AuthenticationContext"
 
-export function LoginPageNew() {
+export function LoginPage() {
   const { setCurrentUser, isLoggedIn } = useAuthContext()
 
   const [nickName, setNickName] = useState("")
@@ -24,7 +24,8 @@ export function LoginPageNew() {
   return (
     <div
       className="login-page"
-      style={{ display: isLoggedIn ? "none" : "flex" }}
+      // style={{ display: isLoggedIn ? "none" : "flex" }}
+      style={{ display: "flex" }}
     >
       <div className="login-card">
         <h2 className="login-title">Welcome back</h2>
