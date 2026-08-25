@@ -1,7 +1,7 @@
 import { useAuthContext } from "../../../context/AuthenticationContext"
 import { useMessageContext } from "../../../context/MessageContext"
 import { useUserListContext } from "../../../context/UserListContext"
-import { fetchChatHistory } from "../../../Hooks/message_processing/chat_fetching/fetchChatHistory"
+import { fetchChatHistory } from "../../../services/fetchChatHistory"
 import { User } from "./User"
 
 export function UserList() {
@@ -9,23 +9,23 @@ export function UserList() {
   const { otherUserList, clearUserNotification } = useUserListContext()
   const { chatingWith, setChatingWith, resetMessage } = useMessageContext()
 
-  const handleUserClick = async (nickName: string) => {
-    clearUserNotification(nickName)
-    if (nickName === chatingWith) {
+  const handleUserClick = async (userId: string | undefined) => {
+    if (
+      !userId ||
+      !currentUser ||
+      !currentUser.publicId ||
+      userId === chatingWith
+    ) {
       return
     }
 
-    setChatingWith(nickName)
+    clearUserNotification(userId)
 
-    try {
-      const userChat = await fetchChatHistory(
-        currentUser?.nickName ?? null,
-        nickName,
-      )
+    setChatingWith(userId)
+    const userChat = await fetchChatHistory(currentUser.publicId, userId)
+    if (userChat) {
       console.log("chat history:", userChat)
       resetMessage(userChat)
-    } catch (error) {
-      console.error("Failed to fetch chat history:", error)
     }
   }
 
@@ -38,8 +38,8 @@ export function UserList() {
           nickName={user.nickName}
           status={user.status}
           newMessage={user.newMessage}
-          onClick={() => handleUserClick(user.nickName)}
-          isActive={chatingWith === user.nickName}
+          onClick={() => handleUserClick(user.publicId)}
+          isActive={chatingWith === user.publicId}
         />
       ))}
     </div>

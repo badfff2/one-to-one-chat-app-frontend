@@ -4,19 +4,24 @@ import type { ChatMessage } from "../interface/interface"
 export async function fetchChatHistory(
   currentUserId: string | null,
   otherUserId: string | null,
-): Promise<ChatMessage[]> {
+): Promise<ChatMessage[] | null> {
   if (!currentUserId || !otherUserId) {
     return []
   }
 
-  const response = await fetch(
-    `${apiBaseUrl}/messages/${currentUserId}/${otherUserId}`,
-    { method: apiMethod },
-  )
+  try {
+    const response = await fetch(
+      `${apiBaseUrl}/messages/${currentUserId}/${otherUserId}`,
+      { method: apiMethod },
+    )
 
-  if (!response.ok) {
-    throw new Error("Failed to fetch chat history")
+    if (!response.ok) {
+      throw new Error("Failed to fetch chat history")
+    }
+
+    return (await response.json()) as ChatMessage[]
+  } catch (error) {
+    console.error("Failed to fetch chat history:", error)
+    return null
   }
-
-  return (await response.json()) as ChatMessage[]
 }
