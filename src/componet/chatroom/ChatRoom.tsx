@@ -6,7 +6,8 @@ import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
 import { sendMessageService } from "../../services/sendMessageService"
-import type { ChatMessage, Status, User } from "../../interface/interface"
+import type { ChatMessage, User } from "../../interface/interface"
+import { userLogout } from "../../services/logout"
 
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
@@ -37,14 +38,7 @@ export function ChatRoom() {
       return
     }
 
-    stompClient.publish({
-      destination: "/app/user.disconnectUser",
-      body: JSON.stringify({
-        nickName: currentUser.nickName,
-        fullName: currentUser.fullName,
-        status: "OFFLINE" as Status,
-      } as User),
-    })
+    userLogout(stompClient, currentUser)
 
     window.location.reload()
   }
