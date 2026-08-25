@@ -1,8 +1,14 @@
 import { useState } from "react"
-import { useChatPage } from "../../../context/chatPageContext"
+import { useAuthContext } from "../../../context/AuthenticationContext"
+import { useMessageContext } from "../../../context/MessageContext"
+import { useConnectionContext } from "../../../context/ConnectionContext"
 
 export function UserChatInput() {
-  const { stompClient, chatingWith, currentUser, addMessage } = useChatPage()
+  const { chatingWith } = useMessageContext()
+  const { currentUser } = useAuthContext()
+  const { stompClient } = useConnectionContext()
+  const { addMessage } = useMessageContext()
+
   const [message, setMessage] = useState("")
 
   if (!chatingWith) {

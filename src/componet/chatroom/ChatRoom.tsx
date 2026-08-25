@@ -1,11 +1,13 @@
-import { useChatPage } from "../../context/chatPageContext"
+import { useAuthContext } from "../../context/AuthenticationContext"
+import { useMessageContext } from "../../context/MessageContext"
 import { ChatArea } from "./chat_area/ChatArea"
 import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
 
 export function ChatRoom() {
-  const { isLoggedIn, chatingWith } = useChatPage()
+  const { isLoggedIn } = useAuthContext()
+  const { chatingWith } = useMessageContext()
 
   return (
     <div

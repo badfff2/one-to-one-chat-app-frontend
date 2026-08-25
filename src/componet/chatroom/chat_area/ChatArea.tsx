@@ -1,17 +1,18 @@
 import type { ReactNode } from "react"
-import { useChatPage } from "../../../context/chatPageContext"
-import type { ChatMessage } from "../../../interface/interface"
 import {
   formatMessageTimestamp,
   getMessageDateTime,
 } from "../../../utilities/TimeStamp"
+import { useMessageContext } from "../../../context/MessageContext"
+import { useAuthContext } from "../../../context/AuthenticationContext"
 
 type ChatAreaProps = {
   children: ReactNode
 }
 
 export function ChatArea({ children }: ChatAreaProps) {
-  const { messages, currentUser } = useChatPage()
+  const { messages } = useMessageContext()
+  const { currentUser } = useAuthContext()
 
   return (
     <div className="chat-area">
