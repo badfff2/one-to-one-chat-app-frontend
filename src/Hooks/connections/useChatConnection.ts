@@ -31,11 +31,6 @@ export const useChatConnection = (
 
     setStompClient(client)
 
-    return () => {
-      if (client) {
-        client.deactivate()
-        setStompClient(null)
-      }
-    }
+    return () => {}
   }, [currentUser, setStompClient])
 }
