@@ -18,7 +18,7 @@ export function ChatArea({ children }: ChatAreaProps) {
     <div className="chat-area">
       <div className="message-list">
         {messages?.map((message) => {
-          const isMine = message.senderId === currentUser?.nickName
+          const isMine = message.senderId === currentUser?.publicId
 
           return (
             <div
