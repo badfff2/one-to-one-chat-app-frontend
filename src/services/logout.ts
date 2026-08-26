@@ -2,13 +2,14 @@ import type { Client } from "@stomp/stompjs"
 import type { Status, User } from "../interface/interface"
 
 export const userLogout = (stompClient: Client, currentUser: User) => {
+  const { newMessage, ...userWithoutNewMessage } = currentUser
+
   stompClient.publish({
     destination: "/app/user.disconnectUser",
     body: JSON.stringify({
-      nickName: currentUser.nickName,
-      fullName: currentUser.fullName,
+      userWithoutNewMessage,
       status: "OFFLINE" as Status,
-    } as User),
+    }),
   })
 
   window.location.reload()
