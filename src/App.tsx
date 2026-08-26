@@ -6,9 +6,8 @@ import { useUserPresenceHandler } from "./Hooks/user_presence/useUserPresenceHan
 import { ChatRoom } from "./componet/chatroom/ChatRoom"
 import { LoginPage } from "./componet/login/LoginPage"
 import { useAuthContext } from "./context/AuthenticationContext"
-import { ChatRoomProviders } from "./context/ChatRoomProvider"
 import { useConnectionContext } from "./context/ConnectionContext"
-import { LoginProviders } from "./context/LoginProvider"
+import { GlobalProviders } from "./context/GlobalProviders"
 
 function LoginPageContent(): React.JSX.Element {
   const { currentUser } = useAuthContext()
@@ -42,12 +41,10 @@ function ChatRoomContent(): React.JSX.Element {
 function App() {
   return (
     <div className="app-shell">
-      <LoginProviders>
+      <GlobalProviders>
         <LoginPageContent />
-      </LoginProviders>
-      <ChatRoomProviders>
         <ChatRoomContent />
-      </ChatRoomProviders>
+      </GlobalProviders>
     </div>
   )
 }

@@ -4,7 +4,7 @@ import { ConnectionContextProvider } from "./ConnectionContext"
 import { UserListContextProvider } from "./UserListContext"
 import { MessageContextProvider } from "./MessageContext"
 
-export const LoginProviders: React.FC<{ children: React.ReactNode }> = ({
+export const GlobalProviders: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   return (
