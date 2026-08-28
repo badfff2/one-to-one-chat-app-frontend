@@ -11,19 +11,15 @@ import { GlobalProviders } from "./context/GlobalProviders"
 
 function LoginPageContent(): React.JSX.Element {
   const { currentUser } = useAuthContext()
-  const { stompClient, setStompClient } = useConnectionContext()
+  const { setStompClient } = useConnectionContext()
   const handleUserPresence = useUserPresenceHandler(currentUser?.nickName)
   const handleUserLogin = useUserLoginHandler()
-  const handleMessageReceived = useMessageReceivingHandler()
-
   useChatConnection(
     currentUser,
     setStompClient,
     handleUserPresence,
     handleUserLogin,
   )
-
-  useSubscription(currentUser, stompClient, handleMessageReceived)
 
   return <LoginPage />
 }

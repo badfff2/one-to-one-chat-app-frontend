@@ -13,15 +13,16 @@ export const useSubscription = (
 
     // If user has publicId, do subscription
     if (currentUser.publicId) {
-      stompClient.subscribe(
+      const subscription = stompClient.subscribe(
         `/user/${currentUser.publicId}/queue/messages`,
         handleMessageReceived,
       )
       console.log(
         `Now Subscribe to: /user/${currentUser.publicId}/queue/messages`,
       )
+      return () => subscription.unsubscribe()
     }
 
     return () => {}
-  }, [currentUser])
+  }, [currentUser, stompClient, handleMessageReceived])
 }
