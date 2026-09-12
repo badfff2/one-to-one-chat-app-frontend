@@ -127,6 +127,8 @@ input {
 
 .chatroom-layout {
   min-height: 100vh;
+  display: flex;
+  flex-direction: row;
   gap: 16px;
   align-items: stretch;
   padding: 20px;
@@ -134,6 +136,7 @@ input {
 }
 
 .chatroom-sidebar {
+  order: 1;
   width: 280px;
   flex-shrink: 0;
   background: #ffffff;
