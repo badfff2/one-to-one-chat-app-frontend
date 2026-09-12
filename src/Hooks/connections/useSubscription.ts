@@ -1,6 +1,7 @@
 import type { Client, IMessage } from "@stomp/stompjs"
 import type { User } from "../../interface/interface"
 import { useEffect } from "react"
+import { subscribeToUserMessages } from "../../services/subscriptions/stompSubscriptions"
 
 export const useSubscription = (
   currentUser: User | null,
@@ -9,17 +10,17 @@ export const useSubscription = (
 ) => {
   useEffect(() => {
     // If no user is logged in, don't connect
-    if (!currentUser || !stompClient) return
+    if (!currentUser || !stompClient || !stompClient.connected) return
 
     // If user has publicId, do subscription
     if (currentUser.publicId) {
-      const subscription = stompClient.subscribe(
-        `/user/${currentUser.publicId}/queue/messages`,
+      const destination = `/user/${currentUser.publicId}/queue/messages`
+      const subscription = subscribeToUserMessages(
+        stompClient,
+        currentUser.publicId,
         handleMessageReceived,
       )
-      console.log(
-        `Now Subscribe to: /user/${currentUser.publicId}/queue/messages`,
-      )
+      console.log(`Now Subscribe to: ${destination}`)
       return () => subscription.unsubscribe()
     }
 
