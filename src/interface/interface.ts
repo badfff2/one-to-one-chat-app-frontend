@@ -17,4 +17,18 @@ interface User {
   newMessage: boolean
 }
 
-export type { Status, ChatMessage, User }
+interface GroupChat {
+  roomId: string
+  roomName: string
+  memberIds: string[]
+}
+
+interface GroupChatMessage {
+  publicId?: string
+  chatRoomId: string
+  senderId: string
+  content: string
+  timestamp: string | Date
+}
+
+export type { Status, ChatMessage, User, GroupChat, GroupChatMessage }
