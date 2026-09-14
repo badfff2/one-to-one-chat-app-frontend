@@ -1,13 +1,16 @@
 import { useState } from "react"
 import { useAuthContext } from "../../context/AuthenticationContext"
+import { useGroupChatContext } from "../../context/GroupChatContext"
+import { fetchGrouplist } from "../../services/fetchGrouplist"
 
 export function LoginPage() {
   const { setCurrentUser, isLoggedIn } = useAuthContext()
+  const { setGroupChatList } = useGroupChatContext()
 
   const [nickName, setNickName] = useState("")
   const [fullName, setfullName] = useState("")
 
-  const handleLogin = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
 
     const trimmedNickname = nickName.trim()
@@ -19,6 +22,8 @@ export function LoginPage() {
       status: "ONLINE",
       newMessage: false,
     })
+
+    setGroupChatList(await fetchGrouplist())
   }
 
   return (
