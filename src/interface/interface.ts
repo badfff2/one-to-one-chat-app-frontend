@@ -21,6 +21,7 @@ interface GroupChat {
   roomId: string
   roomName: string
   memberIds: string[]
+  newMessage: boolean
 }
 
 interface GroupChatMessage {
