@@ -8,6 +8,7 @@ import { UserList } from "./user/UserList"
 import { sendMessageService } from "../../services/sendMessageService"
 import type { ChatMessage } from "../../interface/interface"
 import { userLogout } from "../../services/logout"
+import { ChatRoomItems } from "./chatroom_list/ChatRoomItems"
 
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
@@ -48,6 +49,10 @@ export function ChatRoom() {
       className="chatroom-layout"
       style={{ display: !isLoggedIn ? "none" : "flex" }}
     >
+      <aside className="chatroom-list-sidebar">
+        <ChatRoomItems />
+      </aside>
+
       <aside className="chatroom-sidebar">
         <UserList />
       </aside>
