@@ -24,6 +24,11 @@ export function ChatRoomItems() {
           <span className="chatroom-list-details">
             <span className="chatroom-list-name">{groupChat.roomName}</span>
           </span>
+          {groupChat.newMessage && (
+            <span className="new-message-badge" aria-label="New message">
+              New
+            </span>
+          )}
         </div>
       ))}
     </div>

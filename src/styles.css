@@ -173,13 +173,28 @@ input {
 }
 
 .chatroom-list-item {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 10px 12px;
-  background: #eef2ff;
-  border: 1px solid #a5b4fc;
+  text-align: left;
+  border: 1px solid transparent;
   border-radius: 12px;
+  padding: 10px 12px;
+  background: #f9fafb;
+  color: #111827;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.chatroom-list-item:hover {
+  background: #eef2ff;
+  border-color: #c7d2fe;
+}
+
+.chatroom-list-item:focus-visible {
+  outline: 3px solid rgba(99, 102, 241, 0.35);
+  outline-offset: 2px;
 }
 
 .chatroom-list-avatar {
@@ -190,7 +205,7 @@ input {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
   color: #ffffff;
   font-weight: 700;
   font-size: 0.9rem;
