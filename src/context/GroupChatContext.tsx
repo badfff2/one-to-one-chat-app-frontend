@@ -10,6 +10,7 @@ import type { GroupChat, GroupChatMessage } from "../interface/interface"
 const GroupChatContext = createContext<{
   groupChatList: GroupChat[] | null
   setGroupChatList: (groupChat: GroupChat[] | null) => void
+  newGroupMessageNotification: (roomId: string) => void
   groupChatMessageList: GroupChatMessage[] | null
   addGroupChatMessage: (groupChatMessage: GroupChatMessage) => void
   resetGroupChatMessageList: (
@@ -24,6 +25,18 @@ export const GroupChatContextProvider: React.FC<{
   const [groupChatMessageList, setGroupChatMessageList] = useState<
     GroupChatMessage[] | null
   >(null)
+
+  const newGroupMessageNotification = useCallback((roomId: string) => {
+    setGroupChatList((prev) =>
+      prev
+        ? prev.map((groupChat) =>
+            groupChat.roomId === roomId
+              ? { ...groupChat, newMessage: true }
+              : groupChat,
+          )
+        : null,
+    )
+  }, [])
 
   const addGroupChatMessage = useCallback(
     (groupChatMessage: GroupChatMessage) => {
@@ -45,12 +58,14 @@ export const GroupChatContextProvider: React.FC<{
     () => ({
       groupChatList,
       setGroupChatList,
+      newGroupMessageNotification,
       groupChatMessageList,
       addGroupChatMessage,
       resetGroupChatMessageList,
     }),
     [
       groupChatList,
+      newGroupMessageNotification,
       groupChatMessageList,
       addGroupChatMessage,
       resetGroupChatMessageList,

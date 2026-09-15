@@ -4,7 +4,8 @@ import type { GroupChatMessage } from "../../../interface/interface"
 import { useGroupChatContext } from "../../../context/GroupChatContext"
 
 export function useGroupMessageReceivingHandler() {
-  const { addGroupChatMessage } = useGroupChatContext()
+  const { addGroupChatMessage, newGroupMessageNotification } =
+    useGroupChatContext()
 
   return useCallback(
     (payload: IMessage) => {
@@ -17,19 +18,25 @@ export function useGroupMessageReceivingHandler() {
         return
       }
 
-      handleReceivedMessage(receivedMessage, addGroupChatMessage)
+      handleReceivedMessage(
+        receivedMessage,
+        addGroupChatMessage,
+        newGroupMessageNotification,
+      )
     },
-    [addGroupChatMessage],
+    [addGroupChatMessage, newGroupMessageNotification],
   )
 }
 
 function handleReceivedMessage(
   receivedMessage: GroupChatMessage,
   addGroupChatMessage: (groupChatMessage: GroupChatMessage) => void,
+  newGroupMessageNotification: (roomId: string) => void,
 ) {
   if (!receivedMessage.senderId || !receivedMessage.chatRoomId) {
     return
   }
   console.log("Group Message received", receivedMessage)
   addGroupChatMessage(receivedMessage)
+  newGroupMessageNotification(receivedMessage.chatRoomId)
 }
