@@ -1,12 +1,19 @@
 import { useGroupChatContext } from "../../../context/GroupChatContext"
+import { useMessageContext } from "../../../context/MessageContext"
 
 export function ChatRoomItems() {
   const { groupChatList } = useGroupChatContext()
+  const { activeChat, setActiveChat } = useMessageContext()
 
   const handleChatRoomClick = async (roomId: string | undefined) => {
-    if (!roomId) {
+    if (
+      !roomId ||
+      (activeChat?.type === "group" && activeChat.roomId === roomId)
+    ) {
       return
     }
+
+    setActiveChat({ type: "group", roomId })
   }
 
   return (
@@ -14,7 +21,12 @@ export function ChatRoomItems() {
       <div className="chatroom-list-header">Chatrooms</div>
       {groupChatList?.map((groupChat) => (
         <div
-          className="chatroom-list-item"
+          className={`chatroom-list-item ${
+            activeChat?.type === "group" &&
+            activeChat.roomId === groupChat.roomId
+              ? "active"
+              : ""
+          }`}
           key={groupChat.roomId}
           onClick={() => handleChatRoomClick(groupChat.roomId)}
         >

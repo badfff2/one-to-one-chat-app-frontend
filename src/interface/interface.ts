@@ -32,4 +32,16 @@ interface GroupChatMessage {
   timestamp: string | Date
 }
 
-export type { Status, ChatMessage, User, GroupChat, GroupChatMessage }
+type ActiveChat =
+  | { type: "user"; userId: string }
+  | { type: "group"; roomId: string }
+  | null
+
+export type {
+  Status,
+  ChatMessage,
+  User,
+  GroupChat,
+  GroupChatMessage,
+  ActiveChat,
+}

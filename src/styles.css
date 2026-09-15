@@ -192,6 +192,11 @@ input {
   border-color: #c7d2fe;
 }
 
+.chatroom-list-item.active {
+  background: #eef2ff;
+  border-color: #a5b4fc;
+}
+
 .chatroom-list-item:focus-visible {
   outline: 3px solid rgba(99, 102, 241, 0.35);
   outline-offset: 2px;

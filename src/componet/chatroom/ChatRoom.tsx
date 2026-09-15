@@ -12,17 +12,21 @@ import { ChatRoomItems } from "./chatroom_list/ChatRoomItems"
 
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
-  const { chatingWith, addMessage } = useMessageContext()
+  const { activeChat, addMessage } = useMessageContext()
   const { stompClient } = useConnectionContext()
 
   const handleSendMessage = async (content: string) => {
-    if (!stompClient || !chatingWith || !currentUser) {
+    if (!stompClient || !activeChat || !currentUser) {
+      return
+    }
+
+    if (activeChat.type === "group") {
       return
     }
 
     const msg = {
       senderId: currentUser.publicId,
-      recipientId: chatingWith,
+      recipientId: activeChat.userId,
       content: content,
       timestamp: new Date(),
     } as ChatMessage
@@ -64,10 +68,12 @@ export function ChatRoom() {
         </div>
 
         <ChatArea>
-          {chatingWith ? (
+          {activeChat ? (
             <UserChatInput onSendMessage={handleSendMessage} />
           ) : (
-            <div className="empty-state">Select a user to start chatting.</div>
+            <div className="empty-state">
+              Select a user or chatroom to start chatting.
+            </div>
           )}
         </ChatArea>
       </main>

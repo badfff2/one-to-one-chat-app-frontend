@@ -7,21 +7,21 @@ import { User } from "./User"
 export function UserList() {
   const { currentUser } = useAuthContext()
   const { otherUserList, clearUserNotification } = useUserListContext()
-  const { chatingWith, setChatingWith, resetMessage } = useMessageContext()
+  const { activeChat, setActiveChat, resetMessage } = useMessageContext()
 
   const handleUserClick = async (userId: string | undefined) => {
     if (
       !userId ||
       !currentUser ||
       !currentUser.publicId ||
-      userId === chatingWith
+      (activeChat?.type === "user" && userId === activeChat.userId)
     ) {
       return
     }
 
     clearUserNotification(userId)
 
-    setChatingWith(userId)
+    setActiveChat({ type: "user", userId })
     const userChat = await fetchChatHistory(currentUser.publicId, userId)
     if (userChat) {
       console.log("chat history:", userChat)
@@ -39,7 +39,9 @@ export function UserList() {
           status={user.status}
           newMessage={user.newMessage}
           onClick={() => handleUserClick(user.publicId)}
-          isActive={chatingWith === user.publicId}
+          isActive={
+            activeChat?.type === "user" && activeChat.userId === user.publicId
+          }
         />
       ))}
     </div>

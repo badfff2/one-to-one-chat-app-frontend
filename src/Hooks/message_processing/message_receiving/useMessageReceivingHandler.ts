@@ -1,11 +1,11 @@
 import type { IMessage } from "@stomp/stompjs"
 import { useCallback } from "react"
-import type { ChatMessage } from "../../../interface/interface"
+import type { ActiveChat, ChatMessage } from "../../../interface/interface"
 import { useMessageContext } from "../../../context/MessageContext"
 import { useUserListContext } from "../../../context/UserListContext"
 
 export function useMessageReceivingHandler() {
-  const { addMessage, chatingWith } = useMessageContext()
+  const { addMessage, activeChat } = useMessageContext()
   const { newMessageNotification } = useUserListContext()
 
   return useCallback(
@@ -14,18 +14,18 @@ export function useMessageReceivingHandler() {
 
       handleReceivedMessage(
         receivedMessage,
-        chatingWith,
+        activeChat,
         addMessage,
         newMessageNotification,
       )
     },
-    [addMessage, chatingWith, newMessageNotification],
+    [addMessage, activeChat, newMessageNotification],
   )
 }
 
 function handleReceivedMessage(
   receivedMessage: ChatMessage,
-  chatingWith: string | null,
+  activeChat: ActiveChat,
   addMessage: (message: ChatMessage) => void,
   newMessageNotification: (senderId: string) => void,
 ) {
@@ -35,9 +35,13 @@ function handleReceivedMessage(
 
   console.log("Message received", receivedMessage)
 
-  if (receivedMessage.senderId !== chatingWith) {
+  const isActiveUserChat =
+    activeChat?.type === "user" &&
+    receivedMessage.senderId === activeChat.userId
+
+  if (!isActiveUserChat) {
     newMessageNotification(receivedMessage.senderId)
-  } else if (chatingWith) {
+  } else {
     addMessage(receivedMessage)
   }
 }

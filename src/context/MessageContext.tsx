@@ -5,21 +5,21 @@ import {
   useMemo,
   useState,
 } from "react"
-import type { ChatMessage } from "../interface/interface"
+import type { ActiveChat, ChatMessage } from "../interface/interface"
 
 const MessageContext = createContext<{
   messages: ChatMessage[] | null
   addMessage: (message: ChatMessage) => void
   resetMessage: (message: ChatMessage[]) => void
-  chatingWith: string | null
-  setChatingWith: (userId: string | null) => void
+  activeChat: ActiveChat
+  setActiveChat: (activeChat: ActiveChat) => void
 } | null>(null)
 
 export const MessageContextProvider: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
   const [messages, setMessages] = useState<ChatMessage[] | null>(null)
-  const [chatingWith, setChatingWith] = useState<string | null>(null)
+  const [activeChat, setActiveChat] = useState<ActiveChat>(null)
 
   const addMessage = useCallback((message: ChatMessage) => {
     setMessages((prev) => (prev ? [...prev, message] : [message]))
@@ -34,10 +34,10 @@ export const MessageContextProvider: React.FC<{
       messages,
       addMessage,
       resetMessage,
-      chatingWith,
-      setChatingWith,
+      activeChat,
+      setActiveChat,
     }),
-    [messages, addMessage, resetMessage, chatingWith],
+    [messages, addMessage, resetMessage, activeChat],
   )
 
   return (
