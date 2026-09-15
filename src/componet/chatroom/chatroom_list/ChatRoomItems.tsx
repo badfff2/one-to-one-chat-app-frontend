@@ -3,6 +3,12 @@ import { useGroupChatContext } from "../../../context/GroupChatContext"
 export function ChatRoomItems() {
   const { groupChatList } = useGroupChatContext()
 
+  const handleChatRoomClick = async (roomId: string | undefined) => {
+    if (!roomId) {
+      return
+    }
+  }
+
   return (
     <div className="chatroom-list-container">
       <div className="chatroom-list-header">Chatrooms</div>
@@ -10,7 +16,7 @@ export function ChatRoomItems() {
         <div
           className="chatroom-list-item"
           key={groupChat.roomId}
-          onClick={() => {}}
+          onClick={() => handleChatRoomClick(groupChat.roomId)}
         >
           <span className="chatroom-list-avatar">
             {groupChat.roomName.charAt(0)}
