@@ -3,20 +3,25 @@ import { createContext, useContext, useMemo, useState } from "react"
 
 const ConnectionContext = createContext<{
   stompClient: Client | null
+  isConnected: boolean
   setStompClient: (client: Client | null) => void
+  setIsConnected: (isConnected: boolean) => void
 } | null>(null)
 
 export const ConnectionContextProvider: React.FC<{
   children: React.ReactNode
 }> = ({ children }) => {
   const [stompClient, setStompClient] = useState<Client | null>(null)
+  const [isConnected, setIsConnected] = useState(false)
 
   const ConnectionContextValue = useMemo(
     () => ({
       stompClient,
+      isConnected,
       setStompClient,
+      setIsConnected,
     }),
-    [stompClient],
+    [stompClient, isConnected],
   )
 
   return (

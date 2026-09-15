@@ -5,6 +5,8 @@ import { apiBaseUrl } from "../config/api"
 type ConnectionCallbacks = {
   onUserPresenceChanged: (payload: IMessage) => void
   onLogin: (payload: IMessage) => void
+  onConnected: () => void
+  onDisconnected: () => void
   onError?: (error: unknown) => void
 }
 
@@ -19,6 +21,7 @@ export function setUpConnection(
     webSocketFactory: () => socket,
     reconnectDelay: 5000,
     onConnect: () => {
+      callbacks.onConnected()
       stompClient.subscribe("/topic/public", callbacks.onUserPresenceChanged)
 
       stompClient.subscribe(`/user/${nickName}/systemInfo`, callbacks.onLogin)
@@ -31,6 +34,9 @@ export function setUpConnection(
           status: "ONLINE",
         }),
       })
+    },
+    onDisconnect: () => {
+      callbacks.onDisconnected()
     },
   })
 

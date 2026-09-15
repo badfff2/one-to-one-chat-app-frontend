@@ -6,6 +6,7 @@ import type { User } from "../../interface/interface"
 export const useChatConnection = (
   currentUser: User | null,
   setStompClient: (client: Client | null) => void,
+  setIsConnected: (isConnected: boolean) => void,
   handleUserPresence: (_payload: IMessage) => void,
   handleUserLogin: (payload: IMessage) => void,
 ) => {
@@ -24,13 +25,17 @@ export const useChatConnection = (
       onLogin: (payload) => {
         void handleUserLogin(payload)
       },
+      onConnected: () => {
+        setIsConnected(true)
+      },
+      onDisconnected: () => {
+        setIsConnected(false)
+      },
       onError: (error) => {
         console.error("STOMP error:", error)
       },
     })
 
     setStompClient(client)
-
-    return () => {}
-  }, [currentUser, setStompClient])
+  }, [currentUser, setIsConnected, setStompClient])
 }
