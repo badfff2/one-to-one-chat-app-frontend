@@ -10,7 +10,14 @@ export async function fetchGrouplist(): Promise<GroupChat[] | null> {
     }
 
     console.log("fetch group list:", response)
-    return (await response.json()) as GroupChat[]
+
+    // return (await response.json()) as GroupChat[]
+
+    const groupChatList = (await response.json()) as GroupChat[]
+    return groupChatList.map((groupChat) => ({
+      ...groupChat,
+      newMessage: false,
+    }))
   } catch (error) {
     console.error("Failed to fetch group list:", error)
     return null
