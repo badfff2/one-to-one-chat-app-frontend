@@ -5,8 +5,11 @@ import { ChatArea } from "./chat_area/ChatArea"
 import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
 import { UserList } from "./user/UserList"
-import { sendMessageService } from "../../services/sendMessageService"
-import type { ChatMessage } from "../../interface/interface"
+import {
+  sendGroupMessageService,
+  sendMessageService,
+} from "../../services/sendMessageService"
+import type { ChatMessage, GroupChatMessage } from "../../interface/interface"
 import { userLogout } from "../../services/logout"
 import { ChatRoomItems } from "./chatroom_list/ChatRoomItems"
 
@@ -20,7 +23,19 @@ export function ChatRoom() {
       return
     }
 
+    if (!currentUser.publicId) {
+      return
+    }
+
     if (activeChat.type === "group") {
+      const msg: GroupChatMessage = {
+        chatRoomId: activeChat.roomId,
+        senderId: currentUser.publicId,
+        content,
+        timestamp: new Date(),
+      }
+
+      sendGroupMessageService(msg, stompClient)
       return
     }
 
