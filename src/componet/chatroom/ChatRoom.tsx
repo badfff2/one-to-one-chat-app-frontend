@@ -82,7 +82,7 @@ export function ChatRoom() {
           <LogoutButton onLogout={handleLogout} />
         </div>
 
-        <ChatArea>
+        <ChatArea activeChat={activeChat}>
           {activeChat ? (
             <UserChatInput onSendMessage={handleSendMessage} />
           ) : (
