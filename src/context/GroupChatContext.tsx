@@ -11,6 +11,7 @@ const GroupChatContext = createContext<{
   groupChatList: GroupChat[] | null
   setGroupChatList: (groupChat: GroupChat[] | null) => void
   newGroupMessageNotification: (roomId: string) => void
+  clearGroupMessageNotification: (roomId: string) => void
   groupChatMessageList: GroupChatMessage[] | null
   addGroupChatMessage: (groupChatMessage: GroupChatMessage) => void
   resetGroupChatMessageList: (
@@ -38,6 +39,18 @@ export const GroupChatContextProvider: React.FC<{
     )
   }, [])
 
+  const clearGroupMessageNotification = useCallback((roomId: string) => {
+    setGroupChatList((prev) =>
+      prev
+        ? prev.map((groupChat) =>
+            groupChat.roomId === roomId
+              ? { ...groupChat, newMessage: false }
+              : groupChat,
+          )
+        : null,
+    )
+  }, [])
+
   const addGroupChatMessage = useCallback(
     (groupChatMessage: GroupChatMessage) => {
       setGroupChatMessageList((prev) =>
@@ -59,6 +72,7 @@ export const GroupChatContextProvider: React.FC<{
       groupChatList,
       setGroupChatList,
       newGroupMessageNotification,
+      clearGroupMessageNotification,
       groupChatMessageList,
       addGroupChatMessage,
       resetGroupChatMessageList,
@@ -66,6 +80,7 @@ export const GroupChatContextProvider: React.FC<{
     [
       groupChatList,
       newGroupMessageNotification,
+      clearGroupMessageNotification,
       groupChatMessageList,
       addGroupChatMessage,
       resetGroupChatMessageList,
