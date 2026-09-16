@@ -1,11 +1,13 @@
 import type { IMessage } from "@stomp/stompjs"
 import { useCallback } from "react"
-import type { GroupChatMessage } from "../../../interface/interface"
+import type { ActiveChat, GroupChatMessage } from "../../../interface/interface"
 import { useGroupChatContext } from "../../../context/GroupChatContext"
+import { useMessageContext } from "../../../context/MessageContext"
 
 export function useGroupMessageReceivingHandler() {
   const { addGroupChatMessage, newGroupMessageNotification } =
     useGroupChatContext()
+  const { activeChat } = useMessageContext()
 
   return useCallback(
     (payload: IMessage) => {
@@ -20,16 +22,18 @@ export function useGroupMessageReceivingHandler() {
 
       handleReceivedMessage(
         receivedMessage,
+        activeChat,
         addGroupChatMessage,
         newGroupMessageNotification,
       )
     },
-    [addGroupChatMessage, newGroupMessageNotification],
+    [activeChat, addGroupChatMessage, newGroupMessageNotification],
   )
 }
 
 function handleReceivedMessage(
   receivedMessage: GroupChatMessage,
+  activeChat: ActiveChat,
   addGroupChatMessage: (groupChatMessage: GroupChatMessage) => void,
   newGroupMessageNotification: (roomId: string) => void,
 ) {
@@ -38,5 +42,11 @@ function handleReceivedMessage(
   }
   console.log("Group Message received", receivedMessage)
   addGroupChatMessage(receivedMessage)
+  if (
+    activeChat?.type == "group" &&
+    activeChat.roomId == receivedMessage.chatRoomId
+  ) {
+    return
+  }
   newGroupMessageNotification(receivedMessage.chatRoomId)
 }
