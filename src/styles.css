@@ -126,7 +126,7 @@ input {
 }
 
 .chatroom-layout {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: row;
   gap: 16px;
@@ -139,6 +139,9 @@ input {
   order: 1;
   width: 280px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 16px;
@@ -149,6 +152,9 @@ input {
 .chatroom-list-sidebar {
   width: 240px;
   flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 16px;
@@ -160,6 +166,9 @@ input {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .chatroom-list-header {
@@ -237,6 +246,7 @@ input {
   flex: 1;
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 40px);
   background: #ffffff;
   border: 1px solid #e5e7eb;
   border-radius: 16px;
@@ -252,6 +262,7 @@ input {
   margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid #e5e7eb;
+  flex-shrink: 0;
 }
 
 .chatroom-title {
@@ -264,6 +275,9 @@ input {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .userlist-header {
@@ -372,7 +386,8 @@ input {
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-  min-height: 300px;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .message-list {
@@ -381,6 +396,8 @@ input {
   flex-direction: column;
   gap: 10px;
   padding: 8px 4px 16px;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .chat-message {
@@ -452,6 +469,10 @@ input {
   margin-top: 16px;
   padding-top: 12px;
   border-top: 1px solid #e5e7eb;
+  position: sticky;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.96);
+  flex-shrink: 0;
 }
 
 .chat-input {
