@@ -1,6 +1,7 @@
 import { useAuthContext } from "../../context/AuthenticationContext"
 import { useMessageContext } from "../../context/MessageContext"
 import { useConnectionContext } from "../../context/ConnectionContext"
+import { useGroupChatContext } from "../../context/GroupChatContext"
 import { ChatArea } from "./chat_area/ChatArea"
 import { LogoutButton } from "./chat_area/LogoutButton"
 import { UserChatInput } from "./chat_area/UserChatInput"
@@ -16,6 +17,7 @@ import { ChatRoomItems } from "./chatroom_list/ChatRoomItems"
 export function ChatRoom() {
   const { isLoggedIn, currentUser } = useAuthContext()
   const { activeChat, addMessage } = useMessageContext()
+  const { addGroupChatMessage } = useGroupChatContext()
   const { stompClient } = useConnectionContext()
 
   const handleSendMessage = async (content: string) => {
@@ -36,6 +38,7 @@ export function ChatRoom() {
       }
 
       sendGroupMessageService(msg, stompClient)
+      addGroupChatMessage(msg)
       return
     }
 
